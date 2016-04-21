@@ -22,6 +22,7 @@ public class HttpClient {
     
     private static final String USER_AGENT_NAME = "sansan4j";
     
+    /** APIリクエスト送信 */
     public static <T extends ApiResponse> ResponseModel<T> request(@NonNull ApiKey apiKey,
                                                                    @NonNull RequestModel<T> request) {
         T apiResponse = request(apiKey,
@@ -30,20 +31,21 @@ public class HttpClient {
         return new ResponseModel(apiKey, request, apiResponse);
     }
     
+    /** APIリクエスト送信 */
     static <T extends ApiResponse> T request(@NonNull ApiKey apiKey,
                                              @NonNull HttpUriRequest request,
                                              @NonNull Class<T> responseClass) {
+        //HTTPヘッダ付加
         apiKey.setHeaderTo(request);
         
+        //リクエスト送信
         try (CloseableHttpClient httpClient = httpClientBuilder().build()) {
-            log.info("Api Request Url: {}", request.toString());
+            log.info(request.toString());
             
             try (CloseableHttpResponse response = httpClient.execute(request)) {
                 if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
                     throw new RuntimeException();
                 }
-                //log.debug(EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8));
-                
                 return objectMapper().readValue(response.getEntity()
                                                         .getContent(),
                                                 responseClass);
@@ -56,9 +58,9 @@ public class HttpClient {
     
     private static HttpClientBuilder httpClientBuilder() {
         RequestConfig requestConfig = RequestConfig.custom()
-                                                   .setConnectTimeout(3000)
-                                                   .setConnectionRequestTimeout(3000)
-                                                   .setSocketTimeout(3000)
+                                                   .setConnectTimeout(30000)
+                                                   .setConnectionRequestTimeout(30000)
+                                                   .setSocketTimeout(30000)
                                                    .build();
         
         return HttpClientBuilder.create()

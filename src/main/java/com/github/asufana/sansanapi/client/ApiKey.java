@@ -21,7 +21,6 @@ public class ApiKey {
      */
     public static ApiKey get() {
         //環境変数から取得する
-        //他の方法が望ましい人はサブクラスで
         String value = System.getenv(API_KEY_ENV_NAME);
         if (StringUtils.isEmpty(value)) {
             throw new SansanApiKeyException(String.format("環境変数 %s を設定してください。",

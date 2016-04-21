@@ -5,12 +5,12 @@ import static org.apache.commons.lang3.StringUtils.trimToEmpty;
 /**
  * Sansan 内のタグID
  */
-public class Tag {
-    public static final Tag DEFAULT = new Tag(null);
+public class TagId {
+    public static final TagId DEFAULT = new TagId(null);
     
     private final String value;
     
-    public Tag(String value) {
+    public TagId(String value) {
         this.value = trimToEmpty(value);
     }
     

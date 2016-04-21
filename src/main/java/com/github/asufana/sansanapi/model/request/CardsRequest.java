@@ -1,6 +1,18 @@
 package com.github.asufana.sansanapi.model.request;
 
-import com.github.asufana.sansanapi.model.request.params.*;
+import com.github.asufana.sansanapi.model.request.params.Company;
+import com.github.asufana.sansanapi.model.request.params.Email;
+import com.github.asufana.sansanapi.model.request.params.Limit;
+import com.github.asufana.sansanapi.model.request.params.Mobile;
+import com.github.asufana.sansanapi.model.request.params.Name;
+import com.github.asufana.sansanapi.model.request.params.Offset;
+import com.github.asufana.sansanapi.model.request.params.Range;
+import com.github.asufana.sansanapi.model.request.params.RegisteredFrom;
+import com.github.asufana.sansanapi.model.request.params.RegisteredTo;
+import com.github.asufana.sansanapi.model.request.params.Status;
+import com.github.asufana.sansanapi.model.request.params.Statuses;
+import com.github.asufana.sansanapi.model.request.params.TagIds;
+import com.github.asufana.sansanapi.model.request.params.Tel;
 import com.github.asufana.sansanapi.model.response.BizCards;
 import lombok.Builder;
 import lombok.Singular;
@@ -100,8 +112,8 @@ public class CardsRequest implements RequestModel<BizCards> {
         return ofNullable(mobile).map(Mobile::new).orElse(Mobile.DEFAULT);
     }
     
-    private Tags tags() {
-        return ofNullable(tags).map(Tags::new).orElse(Tags.DEFAULT);
+    private TagIds tags() {
+        return ofNullable(tags).map(TagIds::new).orElse(TagIds.DEFAULT);
     }
     
     private Range range() {

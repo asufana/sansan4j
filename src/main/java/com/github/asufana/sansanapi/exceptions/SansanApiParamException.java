@@ -1,6 +1,6 @@
 package com.github.asufana.sansanapi.exceptions;
 
-public class SansanApiParamException extends RuntimeException {
+public class SansanApiParamException extends SansanApiClientException {
     
     public static SansanApiParamException invalidParam(String paramName,
                                                        String value,

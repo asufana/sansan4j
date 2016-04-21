@@ -56,8 +56,8 @@ public class HttpClientTest {
         
         //取得できること
         assertThat(cards, is(notNullValue()));
-        assertThat(cards.response(), is(notNullValue()));
-        assertThat(cards.response().size(), is(1));
+        assertThat(cards.result(), is(notNullValue()));
+        assertThat(cards.result().size(), is(1));
         System.out.println(cards);
     }
     
@@ -101,8 +101,8 @@ public class HttpClientTest {
         
         //取得できること
         assertThat(cards, is(notNullValue()));
-        assertThat(cards.response(), is(notNullValue()));
-        assertThat(cards.response().size(), is(1));
+        assertThat(cards.result(), is(notNullValue()));
+        assertThat(cards.result().size(), is(1));
         System.out.println(cards);
     }
     
@@ -166,8 +166,8 @@ public class HttpClientTest {
         
         //取得できること
         assertThat(tags, is(notNullValue()));
-        assertThat(tags.response(), is(notNullValue()));
-        assertThat(tags.response().size(), is(1));
+        assertThat(tags.result(), is(notNullValue()));
+        assertThat(tags.result().size(), is(1));
         System.out.println(tags);
     }
 }

@@ -1,6 +1,6 @@
 package com.github.asufana.sansanapi.exceptions;
 
-public class SansanApiKeyException extends RuntimeException {
+public class SansanApiKeyException extends SansanApiClientException {
     
     public static SansanApiKeyException missingApiKey() {
         return new SansanApiKeyException("API Keyが未設定です");

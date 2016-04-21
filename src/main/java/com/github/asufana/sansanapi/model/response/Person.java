@@ -2,11 +2,14 @@ package com.github.asufana.sansanapi.model.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.asufana.sansanapi.model.response.models.BizCard;
+import lombok.Getter;
+import lombok.ToString;
 import lombok.Value;
 import lombok.experimental.Accessors;
 
-@Value
+@Getter
 @Accessors(fluent = true)
+@ToString
 public class Person extends ApiResponse {
     
     private final String id;

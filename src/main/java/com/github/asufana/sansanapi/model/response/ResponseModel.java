@@ -16,10 +16,10 @@ public class ResponseModel<T extends ApiResponse> {
     
     private final RequestModel request;
     
-    private final T response;
+    private final T result;
     
     public boolean hasNext() {
-        return response.hasNext();
+        return result.hasNext();
     }
     
     public ResponseModel<T> getNext() {
@@ -27,7 +27,7 @@ public class ResponseModel<T extends ApiResponse> {
     }
     
     public String toString() {
-        return response.toString();
+        return result.toString();
     }
     
 }

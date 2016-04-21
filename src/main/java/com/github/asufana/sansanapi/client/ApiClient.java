@@ -3,6 +3,8 @@ package com.github.asufana.sansanapi.client;
 import com.github.asufana.sansanapi.model.request.RequestModel;
 import com.github.asufana.sansanapi.model.response.ApiResponse;
 import com.github.asufana.sansanapi.model.response.ResponseModel;
+import javaslang.control.Either;
+import javaslang.control.Try;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
@@ -21,15 +23,23 @@ public class ApiClient {
     }
     
     //コンストラクタ
-    public ApiClient(ApiKey apiKey) {
-        this.apiKey = apiKey != null
-                ? apiKey
-                : ApiKey.get();
+    public ApiClient(@NonNull ApiKey apiKey) {
+        this.apiKey = apiKey;
     }
     
-    //APIリクエスト送信
+    /** APIリクエスト */
     public <T extends ApiResponse> ResponseModel<T> request(@NonNull RequestModel<T> request) {
         return HttpClient.request(apiKey, request);
+    }
+    
+    /** APIリクエスト（Tryラップ） */
+    public <T extends ApiResponse> Try<ResponseModel<T>> requestWrappedTry(@NonNull RequestModel<T> request) {
+        return Try.of(() -> request(request));
+    }
+    
+    /** APIリクエスト（Eitherラップ） */
+    public <T extends ApiResponse> Either<Throwable, ResponseModel<T>> requestWrappedEither(@NonNull RequestModel<T> request) {
+        return requestWrappedTry(request).toEither();
     }
     
 }
