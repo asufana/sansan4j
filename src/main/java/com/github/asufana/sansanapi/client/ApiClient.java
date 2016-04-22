@@ -23,6 +23,11 @@ public class ApiClient {
     }
     
     //コンストラクタ
+    public ApiClient(@NonNull String apiKey) {
+        this(new ApiKey(apiKey));
+    }
+    
+    //コンストラクタ
     public ApiClient(@NonNull ApiKey apiKey) {
         this.apiKey = apiKey;
     }

@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -26,55 +27,59 @@ public class ApiClientTest {
     @Test
     public void testRequest() {
         
+        //APIクライアント
+        ApiClient api = new ApiClient(ApiKey.get());
+        
         //リクエスト生成
-        TagsRequest request = TagsRequest.builder()
-                                         .range(Range.All)
-                                         .type(Type.Shared)
-                                         .build();
-        //取得
-        ResponseModel<Tags> tags = new ApiClient().request(request);
+        TagsRequest tagRequest = TagsRequest.builder()
+                                            .range(Range.All)
+                                            .type(Type.Shared)
+                                            .build();
+        //リクエスト送信
+        ResponseModel<Tags> tags = api.request(tagRequest);
         
         //取得できること
         assertThat(tags, is(notNullValue()));
-        System.out.println(tags);
+        assertThat(tags.result(), is(notNullValue()));
+        assertThat(tags.result().size(), is(not(0)));
+        
+        //取得結果
+        tags.result().forEach(System.out::println);
     }
     
     @Test
     public void testGetNext() {
         
-        //リクエスト生成
-        TagsRequest request = TagsRequest.builder()
-                                         .range(Range.All)
-                                         .type(Type.Shared)
-                                         .limit(1)
-                                         .build();
+        //APIクライアント
+        ApiClient api = new ApiClient(ApiKey.get());
+        
         //リクエスト送信
-        ResponseModel<Tags> response = new ApiClient().request(request);
+        TagsRequest request = TagsRequest.builder().limit(1).build();
+        ResponseModel<Tags> response = api.request(request);
         
         //取得できること
         assertThat(response, is(notNullValue()));
-        //続きがあること
         assertThat(response.hasNext(), is(true));
-        System.out.println(response);
         
         //---
         
-        //続きを取得するリクエスト送信
-        ResponseModel<Tags> tags2 = response.getNext();
+        //同一条件で次オフセットリクエスト送信
+        ResponseModel<Tags> response2 = response.getNext();
         
         //取得できること
         assertThat(response, is(notNullValue()));
-        System.out.println(tags2);
     }
     
     @Test
     //APIの多段呼び出し時の一元エラーハンドリング
-    public void testRequestWithTryAndEither() {
-        ApiClient api = new ApiClient();
+    public void testRequestWrappedTry() {
+        
+        //APIクライアント
+        ApiClient api = new ApiClient(ApiKey.get());
         
         //タグ抽出API
         String searchTagName = "Import";
-        TagsRequest tagsRequest = TagsRequest.builder().build();
+        TagsRequest tagsRequest = TagsRequest.ALL;
         Try<ResponseModel<Tags>> tagsResponse = api.requestWrappedTry(tagsRequest);
         Try<Tag> tagResult = tagsResponse.mapTry(res -> res.result()
                                                            .filter(tag -> tag.name()
@@ -101,12 +106,12 @@ public class ApiClientTest {
         
         //取得できたら
         if (companies.toEither().isRight()) {
-            System.out.println(companies.toEither().right().get());
+            List<String> tokyoCompanies = companies.toEither().right().get();
+            System.out.println(tokyoCompanies);
         }
         //途中で例外が発生していたら
         else {
             System.out.println(companies.toEither().left().get());
         }
     }
-    
 }

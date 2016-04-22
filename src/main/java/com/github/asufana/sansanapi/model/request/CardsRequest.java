@@ -25,6 +25,23 @@ import static java.util.Optional.ofNullable;
 
 @Builder
 public class CardsRequest implements RequestModel<BizCards> {
+    public static final CardsRequest TODAY = CardsRequest.builder()
+                                                         .registeredFrom(RegisteredFrom.TODAY.toString())
+                                                         .registeredTo(RegisteredFrom.TOMMOROW.toString())
+                                                         .build();
+    public static final CardsRequest YESTERDAY = CardsRequest.builder()
+                                                             .registeredFrom(RegisteredFrom.YESTERDAY.toString())
+                                                             .registeredTo(RegisteredFrom.TODAY.toString())
+                                                             .build();
+    public static final CardsRequest SINCE_YESTERDAY = CardsRequest.builder()
+                                                                   .registeredFrom(RegisteredFrom.YESTERDAY.toString())
+                                                                   .registeredTo(RegisteredFrom.TOMMOROW.toString())
+                                                                   .build();
+    public static final CardsRequest SINCE_LASTWEEK = CardsRequest.builder()
+                                                                  .registeredFrom(RegisteredFrom.LASTWEEK.toString())
+                                                                  .registeredTo(RegisteredFrom.TOMMOROW.toString())
+                                                                  .build();
+    
     private static final String apiUrl = "/bizCards/search";
     private static final Class responseClass = BizCards.class;
     
@@ -50,46 +67,47 @@ public class CardsRequest implements RequestModel<BizCards> {
      */
     @Override
     public HttpUriRequest requestUrl() {
-        
+        return new HttpGet(generateUrl());
+    }
+    
+    String generateUrl() {
         //期間検索
         if (registeredFrom().hasValue()) {
-            String url = String.format("%s%s?%s&%s&%s&%s&%s&%s",
-                                       baseUrl,
-                                       apiUrl,
-                                       registeredFrom().url(),
-                                       registeredTo().url(),
-                                       range().url(),
-                                       limit().url(),
-                                       offset().url(),
-                                       statuses().url());
-            return new HttpGet(url);
+            return String.format("%s%s?%s&%s&%s&%s&%s&%s",
+                                 baseUrl,
+                                 apiUrl,
+                                 registeredFrom().url(),
+                                 registeredTo().url(),
+                                 range().url(),
+                                 limit().url(),
+                                 offset().url(),
+                                 statuses().url());
         }
         
         //一般検索
-        String url = String.format("%s%s?%s&%s&%s&%s&%s&%s&%s&%s&%s&%s",
-                                   baseUrl,
-                                   apiUrl,
-                                   company().url(),
-                                   name().url(),
-                                   email().url(),
-                                   tel().url(),
-                                   mobile().url(),
-                                   tags().url(),
-                                   range().url(),
-                                   limit().url(),
-                                   offset().url(),
-                                   statuses().url());
-        return new HttpGet(url);
+        return String.format("%s%s?%s&%s&%s&%s&%s&%s&%s&%s&%s&%s",
+                             baseUrl,
+                             apiUrl,
+                             company().url(),
+                             name().url(),
+                             email().url(),
+                             tel().url(),
+                             mobile().url(),
+                             tags().url(),
+                             range().url(),
+                             limit().url(),
+                             offset().url(),
+                             statuses().url());
     }
     
     private RegisteredFrom registeredFrom() {
         return ofNullable(registeredFrom).map(RegisteredFrom::new)
-                                         .orElse(RegisteredFrom.DEFAULT);
+                                         .orElse(RegisteredFrom.TODAY);
     }
     
     private RegisteredTo registeredTo() {
         return ofNullable(registeredTo).map(RegisteredTo::new)
-                                       .orElse(RegisteredTo.NOW);
+                                       .orElse(RegisteredTo.TOMMOROW);
     }
     
     private Company company() {

@@ -10,6 +10,8 @@ import com.github.asufana.sansanapi.model.response.BizCards;
 import com.github.asufana.sansanapi.model.response.Person;
 import com.github.asufana.sansanapi.model.response.ResponseModel;
 import com.github.asufana.sansanapi.model.response.Tags;
+import javaslang.control.Either;
+import javaslang.control.Try;
 import org.apache.http.client.methods.HttpGet;
 import org.junit.Test;
 
@@ -83,13 +85,14 @@ public class HttpClientTest {
     public void testCardSearchRequestWithRequestModel() {
         
         //リクエスト生成
-        CardsRequest request = CardsRequest.builder().company("ソリトン")
+        CardsRequest request = CardsRequest.builder()
+        //.company("xxx")
         //.name("xxx")
         //.email("xxx")
-                                           .tel("03")
-                                           //.mobile("xxx")
-                                           //.tags("xxx")
-                                           //.tags(Arrays.asList("xxx","xxx"))
+        //.tel("xxx")
+        //.mobile("xxx")
+        //.tags("xxx")
+        //.tags(Arrays.asList("xxx","xxx"))
                                            .range(Range.All)
                                            .limit(1)
                                            .offset(0)
@@ -170,4 +173,32 @@ public class HttpClientTest {
         assertThat(tags.result().size(), is(1));
         System.out.println(tags);
     }
+    
+    //不正APIキー送信時
+    @Test
+    public void testInvalidApiKey() {
+        ApiClient api = new ApiClient("INVALID_API_KEY_STRING");
+        Either<Throwable, ResponseModel<Tags>> response = api.requestWrappedEither(TagsRequest.ALL);
+        
+        //エラーとなること
+        assertThat(response.isLeft(), is(true));
+        assertThat(response.left().get().toString(),
+                   is("Error(statusCode=401, message=null, errorCodes=invalid_api_key)"));
+    }
+    
+    //必須パラメータ不足
+    @Test
+    public void testInvalidParam() {
+        HttpGet request = new HttpGet("https://api.sansan.com/v1/bizCards");
+        Either<Throwable, BizCards> response = Try.of(() -> HttpClient.request(ApiKey.get(),
+                                                                               request,
+                                                                               BizCards.class))
+                                                  .toEither();
+        
+        //エラーとなること
+        assertThat(response.isLeft(), is(true));
+        assertThat(response.left().get().toString(),
+                   is("Error(statusCode=400, message=null, errorCodes=required, required)"));
+    }
+    
 }

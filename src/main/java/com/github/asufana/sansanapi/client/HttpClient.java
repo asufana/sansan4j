@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.asufana.sansanapi.exceptions.SansanApiClientException;
 import com.github.asufana.sansanapi.model.request.RequestModel;
 import com.github.asufana.sansanapi.model.response.ApiResponse;
+import com.github.asufana.sansanapi.model.response.Error;
 import com.github.asufana.sansanapi.model.response.ResponseModel;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -44,7 +45,10 @@ public class HttpClient {
             
             try (CloseableHttpResponse response = httpClient.execute(request)) {
                 if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-                    throw new RuntimeException();
+                    Error error = objectMapper().readValue(response.getEntity()
+                                                                   .getContent(),
+                                                           Error.class);
+                    throw new SansanApiClientException(error);
                 }
                 return objectMapper().readValue(response.getEntity()
                                                         .getContent(),
@@ -75,5 +79,4 @@ public class HttpClient {
                                false);
         return objectMapper;
     }
-    
 }

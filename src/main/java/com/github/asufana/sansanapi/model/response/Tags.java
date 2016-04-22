@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -41,6 +42,10 @@ public class Tags extends ApiResponse {
     
     public <T> Stream<T> flatMap(Function<Tag, Stream<T>> function) {
         return stream().flatMap(function);
+    }
+    
+    public void forEach(Consumer<Tag> consumer) {
+        list.forEach(consumer);
     }
     
     public Integer size() {

@@ -13,6 +13,8 @@ import static java.util.Optional.ofNullable;
 
 @Builder
 public class TagsRequest implements RequestModel<Tags> {
+    public static final TagsRequest ALL = TagsRequest.builder().build();
+    
     private static final String apiUrl = "/tags";
     private static final Class responseClass = Tags.class;
     
@@ -27,14 +29,17 @@ public class TagsRequest implements RequestModel<Tags> {
      */
     @Override
     public HttpUriRequest requestUrl() {
-        String url = String.format("%s%s?%s&%s&%s&%s",
-                                   baseUrl,
-                                   apiUrl,
-                                   range().url(),
-                                   types().url(),
-                                   limit().url(),
-                                   offset().url());
-        return new HttpGet(url);
+        return new HttpGet(generateUrl());
+    }
+    
+    String generateUrl() {
+        return String.format("%s%s?%s&%s&%s&%s",
+                             baseUrl,
+                             apiUrl,
+                             range().url(),
+                             types().url(),
+                             limit().url(),
+                             offset().url());
     }
     
     private Range range() {

@@ -6,7 +6,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
 
 public class PersonRequest implements RequestModel<Person> {
-    
     private static final String apiUrl = "/persons";
     private static final Class responseClass = Person.class;
     
