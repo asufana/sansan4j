@@ -8,13 +8,13 @@ import static org.apache.commons.lang3.StringUtils.trimToEmpty;
 /**
  * 部分⼀致にて Sansan 内の電話番号を検索する
  */
-public class Tel {
-    public static final Tel DEFAULT = new Tel(null);
+public class TelParam {
+    public static final TelParam DEFAULT = new TelParam(null);
     private static final String VALIDATOR = "^[\\d\\-]+$";
     
     private final String value;
     
-    public Tel(String value) {
+    public TelParam(String value) {
         this.value = trimToEmpty(value);
         
         isSatisfied();

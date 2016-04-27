@@ -9,15 +9,15 @@ import static java.util.stream.Collectors.toList;
 /**
  * 対象とするタグの種別リスト（省略時：Private+Public+Shared）
  */
-public class Types {
+public class TypesParam {
     
-    public static final Types DEFAULT = new Types(Arrays.asList(Type.Shared,
-                                                                Type.Public,
-                                                                Type.Private));
+    public static final TypesParam DEFAULT = new TypesParam(Arrays.asList(TypeParam.Shared,
+                                                                          TypeParam.Public,
+                                                                          TypeParam.Private));
     
-    private List<Type> values;
+    private List<TypeParam> values;
     
-    public Types(List<Type> values) {
+    public TypesParam(List<TypeParam> values) {
         if (values == null || values.isEmpty()) {
             this.values = DEFAULT.values;
         }
@@ -27,6 +27,6 @@ public class Types {
     }
     
     public String url() {
-        return values.stream().map(Type::url).collect(joining("&"));
+        return values.stream().map(TypeParam::url).collect(joining("&"));
     }
 }

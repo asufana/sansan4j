@@ -8,23 +8,29 @@ import org.apache.http.client.methods.HttpUriRequest;
 
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
+/** APIキーオブジェクト */
 @Getter
 @Accessors(fluent = true)
 public class ApiKey {
     private static final String API_KEY_ENV_NAME = "SANSAN_API_KEY";
     
-    private final String value;
+    //SansanAPIキー文字列
+    private final String apiKeyString;
     
-    //コンストラクタ
-    public ApiKey(String value) {
-        if (isEmpty(value)) {
+    /**
+     * コンストラクタ
+     * @param apiKeyString SansanAPIキー文字列
+     */
+    public ApiKey(String apiKeyString) {
+        if (isEmpty(apiKeyString)) {
             throw SansanApiKeyException.missingApiKey();
         }
-        this.value = value;
+        this.apiKeyString = apiKeyString;
     }
     
     /**
      * APIKeyの取得
+     * @return APIキーオブジェクト
      */
     public static ApiKey get() {
         //環境変数から取得する
@@ -37,10 +43,11 @@ public class ApiKey {
     }
     
     /**
-     * HTTPヘッダへの登録
+     * HTTPヘッダへのAPIキー文字列登録
+     * @param request HTTPリクエスト用HttpUriRequestオブジェクト
      */
     void setHeaderTo(@NonNull HttpUriRequest request) {
-        request.setHeader("X-Sansan-Api-Key", value);
+        request.setHeader("X-Sansan-Api-Key", apiKeyString);
     }
     
 }

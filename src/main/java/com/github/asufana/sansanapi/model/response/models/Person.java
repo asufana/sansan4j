@@ -3,10 +3,10 @@ package com.github.asufana.sansanapi.model.response.models;
 import lombok.Value;
 import lombok.experimental.Accessors;
 
-/** 所有者データ */
+/** 人物データ */
 @Value
 @Accessors(fluent = true)
-public class Owner {
+public class Person {
     private final String id;
-    private final String name;
+    private final BizCard headBizCard;
 }

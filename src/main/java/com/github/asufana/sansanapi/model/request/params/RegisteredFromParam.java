@@ -3,9 +3,9 @@ package com.github.asufana.sansanapi.model.request.params;
 import com.github.asufana.sansanapi.exceptions.SansanApiParamException;
 import org.joda.time.DateMidnight;
 
-import static com.github.asufana.sansanapi.model.request.params.RegisteredTo.VALIDATOR;
-import static com.github.asufana.sansanapi.model.request.params.RegisteredTo.guessYYYYMMDD;
-import static com.github.asufana.sansanapi.model.request.params.RegisteredTo.toDateFormatString;
+import static com.github.asufana.sansanapi.model.request.params.RegisteredToParam.VALIDATOR;
+import static com.github.asufana.sansanapi.model.request.params.RegisteredToParam.guessYYYYMMDD;
+import static com.github.asufana.sansanapi.model.request.params.RegisteredToParam.toDateFormatString;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 import static org.apache.commons.lang3.StringUtils.trimToEmpty;
@@ -13,15 +13,15 @@ import static org.apache.commons.lang3.StringUtils.trimToEmpty;
 /**
  * 名刺登録⽇時
  */
-public class RegisteredFrom {
-    public static final RegisteredFrom LASTWEEK = new RegisteredFrom(toDateFormatString(new DateMidnight().minusDays(7)));
-    public static final RegisteredFrom YESTERDAY = new RegisteredFrom(toDateFormatString(new DateMidnight().minusDays(1)));
-    public static final RegisteredFrom TODAY = new RegisteredFrom(toDateFormatString(new DateMidnight()));
-    public static final RegisteredFrom TOMMOROW = new RegisteredFrom(toDateFormatString(new DateMidnight().plusDays(1)));
+public class RegisteredFromParam {
+    public static final String LASTWEEK = new RegisteredFromParam(toDateFormatString(new DateMidnight().minusDays(7))).toString();
+    public static final String YESTERDAY = new RegisteredFromParam(toDateFormatString(new DateMidnight().minusDays(1))).toString();
+    public static final String TODAY = new RegisteredFromParam(toDateFormatString(new DateMidnight())).toString();
+    public static final String TOMMOROW = new RegisteredFromParam(toDateFormatString(new DateMidnight().plusDays(1))).toString();
     
     private final String value;
     
-    public RegisteredFrom(String value) {
+    public RegisteredFromParam(String value) {
         this.value = guessYYYYMMDD(trimToEmpty(value));
         
         isSatisfied();
@@ -32,7 +32,7 @@ public class RegisteredFrom {
             return;
         }
         
-        if (this.value.matches(RegisteredTo.VALIDATOR) == false) {
+        if (this.value.matches(RegisteredToParam.VALIDATOR) == false) {
             throw SansanApiParamException.invalidParam("RegisteredFrom",
                                                        this.value,
                                                        VALIDATOR);

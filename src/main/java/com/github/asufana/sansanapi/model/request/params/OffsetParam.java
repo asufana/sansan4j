@@ -3,12 +3,12 @@ package com.github.asufana.sansanapi.model.request.params;
 /**
  * 取得する一覧の開始位置（省略時：0）
  */
-public class Offset {
-    public static final Offset DEFAULT = new Offset(0);
+public class OffsetParam {
+    public static final OffsetParam DEFAULT = new OffsetParam(0);
     
     private final Integer value;
     
-    public Offset(Integer value) {
+    public OffsetParam(Integer value) {
         if (value == null || 0 > value) {
             this.value = 0;
         }
@@ -28,7 +28,7 @@ public class Offset {
     /**
      * 次のoffset値
      */
-    public Offset nextOffset() {
-        return new Offset(value + 1);
+    public OffsetParam nextOffset(LimitParam limit) {
+        return new OffsetParam(value + limit.value());
     }
 }

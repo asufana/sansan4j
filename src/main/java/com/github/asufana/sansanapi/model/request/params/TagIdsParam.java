@@ -9,25 +9,25 @@ import static java.util.stream.Collectors.joining;
 /**
  * Sansan 内のタグID
  */
-public class TagIds {
+public class TagIdsParam {
     
-    public static final TagIds DEFAULT = new TagIds(null);
+    public static final TagIdsParam DEFAULT = new TagIdsParam(null);
     
-    private List<TagId> values;
+    private List<TagIdParam> values;
     
-    public TagIds(List<String> values) {
+    public TagIdsParam(List<String> values) {
         if (values == null || values.isEmpty()) {
             this.values = Collections.emptyList();
         }
         else {
             this.values = values.stream()
                                 .distinct()
-                                .map(value -> new TagId(value))
+                                .map(value -> new TagIdParam(value))
                                 .collect(Collectors.toList());
         }
     }
     
     public String url() {
-        return values.stream().map(TagId::url).collect(joining("&"));
+        return values.stream().map(TagIdParam::url).collect(joining("&"));
     }
 }

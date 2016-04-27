@@ -18,21 +18,49 @@ import org.apache.http.impl.client.HttpClientBuilder;
 
 import java.io.IOException;
 
+/** HTTPリクエストクライアント */
 @Slf4j
 public class HttpClient {
     
-    private static final String USER_AGENT_NAME = "sansan4j";
+    //APIリクエスト時のUA名
+    private static final String USER_AGENT_NAME = "sansan4j (org.apache.httpcomponents -> httpclient 4.5.2)";
     
-    /** APIリクエスト送信 */
-    public static <T extends ApiResponse> ResponseModel<T> request(@NonNull ApiKey apiKey,
-                                                                   @NonNull RequestModel<T> request) {
+    /**
+     * APIリクエスト送信
+     * @param apiKey SansanAPIキー
+     * @param request リクエストオブジェクト
+     */
+    public static <T extends ApiResponse<U>, U> ResponseModel<T, U> request(@NonNull ApiKey apiKey,
+                                                                            @NonNull RequestModel<T, U> request) {
         T apiResponse = request(apiKey,
                                 request.requestUrl(),
                                 request.responseClass());
-        return new ResponseModel(apiKey, request, apiResponse);
+        return new ResponseModel(apiResponse);
     }
     
-    /** APIリクエスト送信 */
+    /**
+     * APIリクエスト送信
+     * @param apiKey SansanAPIキー
+     * @param request リクエストオブジェクト
+     * @param limit 取得する一覧の上限数
+     */
+    public static <T extends ApiResponse<U>, U> ResponseModel<T, U> request(@NonNull ApiKey apiKey,
+                                                                            @NonNull RequestModel<T, U> request,
+                                                                            @NonNull Integer limit) {
+        ResponseModel<T, U> result = request(apiKey, request);
+        while (result.hasNext() && result.size() < limit) {
+            request = request.getNextOffset();
+            result = result.add(request(apiKey, request));
+        }
+        return result;
+    }
+    
+    /**
+     * APIリクエスト送信
+     * @param apiKey SansanAPIキー
+     * @param request リクエストオブジェクト
+     * @param responseClass 返却型
+     */
     static <T extends ApiResponse> T request(@NonNull ApiKey apiKey,
                                              @NonNull HttpUriRequest request,
                                              @NonNull Class<T> responseClass) {
@@ -50,6 +78,8 @@ public class HttpClient {
                                                            Error.class);
                     throw new SansanApiClientException(error);
                 }
+                
+                //JSON文字列のオブジェクトマッピング
                 return objectMapper().readValue(response.getEntity()
                                                         .getContent(),
                                                 responseClass);

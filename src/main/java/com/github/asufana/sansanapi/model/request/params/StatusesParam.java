@@ -9,15 +9,15 @@ import static java.util.stream.Collectors.toList;
 /**
  * 対象とする名刺入力状態（省略時：Processing+Completed+Unreadable）
  */
-public class Statuses {
+public class StatusesParam {
     
-    public static final Statuses DEFAULT = new Statuses(Arrays.asList(Status.Processing,
-                                                                      Status.Completed,
-                                                                      Status.Unreadable));
+    public static final StatusesParam DEFAULT = new StatusesParam(Arrays.asList(StatusParam.Processing,
+                                                                                StatusParam.Completed,
+                                                                                StatusParam.Unreadable));
     
-    private List<Status> values;
+    private List<StatusParam> values;
     
-    public Statuses(List<Status> values) {
+    public StatusesParam(List<StatusParam> values) {
         if (values == null || values.isEmpty()) {
             this.values = DEFAULT.values;
         }
@@ -27,6 +27,6 @@ public class Statuses {
     }
     
     public String url() {
-        return values.stream().map(Status::url).collect(joining("&"));
+        return values.stream().map(StatusParam::url).collect(joining("&"));
     }
 }

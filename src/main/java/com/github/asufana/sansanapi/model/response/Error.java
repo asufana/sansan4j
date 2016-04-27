@@ -9,6 +9,7 @@ import lombok.experimental.Accessors;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/** エラー結果 */
 @Getter
 @Accessors(fluent = true)
 @ToString

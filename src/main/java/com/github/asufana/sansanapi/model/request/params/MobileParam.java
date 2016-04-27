@@ -3,18 +3,18 @@ package com.github.asufana.sansanapi.model.request.params;
 import static org.apache.commons.lang3.StringUtils.trimToEmpty;
 
 /**
- * Sansan 内のタグID
+ * 部分⼀致にて Sansan 内の携帯番号を検索する
  */
-public class TagId {
-    public static final TagId DEFAULT = new TagId(null);
+public class MobileParam {
+    public static final MobileParam DEFAULT = new MobileParam(null);
     
     private final String value;
     
-    public TagId(String value) {
+    public MobileParam(String value) {
         this.value = trimToEmpty(value);
     }
     
     public String url() {
-        return String.format("tagId=%s", value);
+        return String.format("mobile=%s", value);
     }
 }

@@ -3,7 +3,8 @@ package com.github.asufana.sansanapi.model.request;
 import com.github.asufana.sansanapi.model.response.ApiResponse;
 import org.apache.http.client.methods.HttpUriRequest;
 
-public interface RequestModel<T extends ApiResponse> {
+/** 検索条件オブジェクト */
+public interface RequestModel<T extends ApiResponse<U>, U> {
     
     String baseUrl = "https://api.sansan.com/v1";
     
@@ -14,6 +15,6 @@ public interface RequestModel<T extends ApiResponse> {
     Class<T> responseClass();
     
     /** 次オフセットのリクエストを生成 */
-    <U extends RequestModel<T>> U getNextOffset();
+    <S extends RequestModel<T, U>> S getNextOffset();
     
 }

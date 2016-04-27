@@ -1,13 +1,16 @@
 package com.github.asufana.sansanapi.model.request;
 
-import com.github.asufana.sansanapi.exceptions.SansanApiClientException;
-import com.github.asufana.sansanapi.model.response.Person;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
 
-public class PersonRequest implements RequestModel<Person> {
+import com.github.asufana.sansanapi.exceptions.SansanApiClientException;
+import com.github.asufana.sansanapi.model.response.Persons;
+import com.github.asufana.sansanapi.model.response.models.Person;
+
+/** 人物検索条件 */
+public class PersonRequest implements RequestModel<Persons, Person> {
     private static final String apiUrl = "/persons";
-    private static final Class responseClass = Person.class;
+    private static final Class responseClass = Persons.class;
     
     private final String personId;
     

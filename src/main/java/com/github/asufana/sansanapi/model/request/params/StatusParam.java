@@ -3,7 +3,7 @@ package com.github.asufana.sansanapi.model.request.params;
 /**
  * 対象とする名刺入力状態
  */
-public enum Status {
+public enum StatusParam {
     Processing,
     Completed,
     Unreadable;
