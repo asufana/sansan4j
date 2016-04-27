@@ -28,12 +28,11 @@ SansanApiClient api = new SansanApiClient(YOUR_API_KEY_STRING);
 ### 3. リクエストオブジェクトの生成
 
 ```java
-BizCardsRequest request = BizCardsRequest
-                                                 .builder()
-                                                 .registeredFrom("20160401")
-                                                 .registeredTo("20160402")
-                                                 .range(RangeParam.All)
-                                                 .build();
+BizCardsRequest request = BizCardsRequest.builder()
+    .registeredFrom("20160401")
+    .registeredTo("20160402")
+    .range(RangeParam.All)
+    .build();
 ```
 
 ### 4. リクエスト送信とレスポンス処理
@@ -43,22 +42,25 @@ ResponseModel<BizCards, BizCard> cards = api.request(request);
 List<BizCard> results = cards.results();
 ```
 
-あるいは取得数を指定して、100件以上を同時に取得する。
+あるいは取得数Limitを指定して、100件以上を同時に取得する。
 
 ```java
 Integer limit = 1000;
 ResponseModel<BizCards, BizCard> cards = api.request(BizCardsRequest.SINCE_LASTWEEK, limit);
 ```
 
+---
+
 ## レスポンスの処理
 
 ```java
+//レスポンスの取得
 ResponseModel<BizCards, BizCard> cards = api.request(request);
 
-//結果リスト取得
+//リストを取得
 List<BizCard> results = cards.results();
 
-//Java8 Stream API
+//Java8 Stream API で操作
 cards.stream()...
 cards.map(BizCard::email)...
 cards.filter(card -> card.email() != null)...
@@ -121,8 +123,7 @@ PersonRequest request = new PersonRequest("xxx"); //人物ID
 ### タグ取得リクエスト
 
 ```java
-TagsRequest request = TagsRequest
-    .builder()
+TagsRequest request = TagsRequest.builder()
     .range(RangeParam.All) 
     .type(TypeParam.Shared) //タグ種別（省略時：private+public+shared）
     .types(Arrays.asList(TypeParam.Shared, TypeParam.Public)) //タグ種別の複数指定
@@ -132,9 +133,9 @@ TagsRequest request = TagsRequest
 ```
 
 
-## Try/Eitherラッピング
+## その他
 
-APIの多段呼び出し時のエラーハンドリング
+Try/Eitherラッピングを使ったAPI多段呼び出し時のエラーハンドリング例
 
 ```java
 SansanApiClient api = new SansanApiClient(ApiKey.get());
