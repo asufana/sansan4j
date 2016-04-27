@@ -51,7 +51,7 @@ ResponseModel<BizCards, BizCard> cards = api.request(BizCardsRequest.SINCE_LASTW
 
 ---
 
-## レスポンスの処理
+## レスポンスの操作
 
 ```java
 //レスポンスの取得
@@ -69,7 +69,7 @@ cards.forEach(System.out::println);
 
 ## リクエストの生成
 
-### 名刺取得リクエスト（期間指定）
+### 1. 名刺取得リクエスト（期間指定）
 
 ```java
 BizCardsRequest request = BizCardsRequest.builder()
@@ -96,7 +96,7 @@ BizCardsRequest request = BizCardsRequest.SINCE_YESTERDAY;
 BizCardsRequest request = BizCardsRequest.SINCE_LASTWEEK;
 ```
 
-### 名刺取得リクエスト（条件指定）
+### 2. 名刺取得リクエスト（条件指定）
 
 ```java
 BizCardsRequest request = BizCardsRequest.builder()
@@ -114,13 +114,13 @@ BizCardsRequest request = BizCardsRequest.builder()
    .build();
 ```
 
-### 人物取得リクエスト
+### 3. 人物取得リクエスト
 
 ```java
 PersonRequest request = new PersonRequest("xxx"); //人物ID
 ```
 
-### タグ取得リクエスト
+### 4. タグ取得リクエスト
 
 ```java
 TagsRequest request = TagsRequest.builder()
