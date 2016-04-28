@@ -8,11 +8,24 @@ Sansan BizCard API for Java8.
 ### 1. Maven Repository
 
 ```xml
-<dependency>
-  <groupId>com.github.asufana</groupId>
-  <artifactId>sansan4j</artifactId>
-  <version>1.0</version>
-</dependency>
+<dependencies>
+    <dependency>
+        <groupId>com.github.asufana</groupId>
+        <artifactId>sansan4j</artifactId>
+        <version>1.0</version>
+    </dependency>
+</dependencies>
+
+<repositories>
+    <repository>
+        <id>asufana</id>
+        <url>https://raw.github.com/asufana/sansan4j/mvn-repo/</url>
+        <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+        </snapshots>
+    </repository>
+</repositories>
 ```
 
 ### 2. APIクライアントインスタンスの生成
