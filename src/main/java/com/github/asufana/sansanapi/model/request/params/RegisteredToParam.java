@@ -50,7 +50,7 @@ public class RegisteredToParam {
                 + "Z";
     }
     
-    static String toDateFormatString(DateMidnight dateMidnight) {
+    public static String toDateFormatString(DateMidnight dateMidnight) {
         return toDateFormatString(dateMidnight.toDateTime());
     }
     

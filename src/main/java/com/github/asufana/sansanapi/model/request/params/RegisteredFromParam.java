@@ -14,10 +14,13 @@ import static org.apache.commons.lang3.StringUtils.trimToEmpty;
  * 名刺登録⽇時
  */
 public class RegisteredFromParam {
+    public static final String LONGAGO = new RegisteredFromParam(toDateFormatString(new DateMidnight(2000,
+                                                                                                     01,
+                                                                                                     01))).toString();
     public static final String LASTWEEK = new RegisteredFromParam(toDateFormatString(new DateMidnight().minusDays(7))).toString();
     public static final String YESTERDAY = new RegisteredFromParam(toDateFormatString(new DateMidnight().minusDays(1))).toString();
     public static final String TODAY = new RegisteredFromParam(toDateFormatString(new DateMidnight())).toString();
-    public static final String TOMMOROW = new RegisteredFromParam(toDateFormatString(new DateMidnight().plusDays(1))).toString();
+    public static final String TOMORROW = new RegisteredFromParam(toDateFormatString(new DateMidnight().plusDays(1))).toString();
     
     private final String value;
     

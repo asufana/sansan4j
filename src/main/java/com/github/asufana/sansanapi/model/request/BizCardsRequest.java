@@ -31,7 +31,7 @@ public class BizCardsRequest implements RequestModel<BizCards, BizCard> {
     /** 今日登録された名刺一覧を検索する */
     public static final BizCardsRequest TODAY = BizCardsRequest.builder()
                                                                .registeredFrom(RegisteredFromParam.TODAY.toString())
-                                                               .registeredTo(RegisteredFromParam.TOMMOROW.toString())
+                                                               .registeredTo(RegisteredFromParam.TOMORROW.toString())
                                                                .build();
     
     /** 昨日登録された名刺一覧を検索する */
@@ -43,13 +43,13 @@ public class BizCardsRequest implements RequestModel<BizCards, BizCard> {
     /** 昨日から今日までに登録された名刺一覧を検索する */
     public static final BizCardsRequest SINCE_YESTERDAY = BizCardsRequest.builder()
                                                                          .registeredFrom(RegisteredFromParam.YESTERDAY)
-                                                                         .registeredTo(RegisteredFromParam.TOMMOROW)
+                                                                         .registeredTo(RegisteredFromParam.TOMORROW)
                                                                          .build();
     
     /** 先週から今日までに登録された名刺一覧を検索する */
     public static final BizCardsRequest SINCE_LASTWEEK = BizCardsRequest.builder()
                                                                         .registeredFrom(RegisteredFromParam.LASTWEEK)
-                                                                        .registeredTo(RegisteredFromParam.TOMMOROW)
+                                                                        .registeredTo(RegisteredFromParam.TOMORROW)
                                                                         .build();
     
     private static final Class responseClass = BizCards.class;
