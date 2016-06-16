@@ -3,7 +3,7 @@
 
     <groupId>com.github.asufana</groupId>
     <artifactId>sansan4j</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -17,7 +17,7 @@
         <developerConnection>scm:git:git@github.com:asufana/sansan4j.git
         </developerConnection>
         <url>scm:git:git@github.com:asufana/sansan4j.git</url>
-        <tag>sansan4j-1.0</tag>
+        <tag>sansan4j-1.1</tag>
     </scm>
 
     <build>
